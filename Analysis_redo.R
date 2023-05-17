@@ -20,7 +20,6 @@ for(f in list.files(pattern='.RData')[(30*(array_id-1)):(30*array_id-1)+1]){
 
     stick0 = mr_dat$b_out # for the sake of my code
     set.seed(12345)
-    #ciscML_res = try(cismr_cML_DP(b_exp=b_exp_cond,b_out=b_out_cond,Sig_exp_inv=Sig_exp_inv,Sig_out_inv=Sig_out_inv,maxit=100,n = mr_dat$N1,random_start = 0,method='splicing'))
     ciscML_res = try(cismr_cML_DP(b_exp=b_exp_cond,b_out=b_out_cond,Sig_exp_inv=Sig_exp_inv,Sig_out_inv=Sig_out_inv,maxit=200,n = mr_dat$N1,random_start = 5,min_theta_range=-0.1,max_theta_range=0.1,num_pert=100,random_start_pert=5))
     if(class(ciscML_res)=='try-error'){print(paste0('Error: ',s));next;}
     write.table(t(c(s,length(stick0),ciscML_res$BIC_DP_theta,ciscML_res$BIC_DP_se,ciscML_res$BIC_DP_p,length(ciscML_res$BIC_invalid))),paste0('cisMR_res.txt',array_id),quote=F,row.names=F,col.names=F,append=T)
